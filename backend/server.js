@@ -19,7 +19,7 @@ app.use(express.urlencoded({extended: false}))
 
 
 // Routes
-app.use('/user', require('./routes/userRoute'))
+app.use('/users', require('./routes/userRoute'))
 
 
 app.listen(port, () => {
