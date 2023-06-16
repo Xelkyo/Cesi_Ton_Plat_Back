@@ -39,8 +39,22 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        default: 'customer'
+        required: [true, 'Role is required'],
+        enum: ['customer', 'salesperson', 'restaurantmanager', 'deliveryperson']
     },
+    transport: {
+        type: String,
+        enum: ['motorbike', 'bicycle', 'car', 'other'],
+        default: function() {
+            return this.role === 'deliveryperson' ? 'other' : undefined;
+        }
+    },
+    restaurants: {
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant' }],
+        default: function() {
+            return this.role === 'restaurantmanager' ? [] : undefined;
+        }
+    }
 }, { timestamps: true })
 
 const User = mongoose.model('User', userSchema)
