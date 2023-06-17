@@ -1,5 +1,5 @@
 const User = require('../models/User')
-const bcrypt = require('bcrypt')
+const Restaurant = require('../models/Restaurant')
 
 const userRegister = async (req, res) => {
     const lastName = req.body.lastName;
@@ -9,6 +9,7 @@ const userRegister = async (req, res) => {
     const address = req.body.address;
     const phone = req.body.phone;
     const birthday = req.body.birthday;
+    const role = req.body.role;
 
     // check if user already exists
     try {
@@ -18,7 +19,7 @@ const userRegister = async (req, res) => {
         } else {
             // create new user
             try {
-                await User.create({ lastName : lastName, firstName : firstName, email : email, password : password, address : address, phone : phone, birthday : birthday });
+                await User.create({ lastName : lastName, firstName : firstName, email : email, password : password, role : role, address : address, phone : phone, birthday : birthday });
                 return res.status(200).send({ msg: 'User created' });
             } catch (err) {
                 return res.status(400).send({ msg: err });
@@ -47,4 +48,22 @@ const userLogin = async (req, res) => {
     }
 }
 
-module.exports = { userRegister, userLogin }
+const getUsers = async (req, res) => {
+    try {
+        const users = await User.find();
+        res.status(200).json({ users });
+    } catch (err) {
+        res.status(400).json({ msg: err });
+    }
+}
+
+const getRestaurants = async (req, res) => {
+    try {
+        const restaurants = await Restaurant.find();
+        res.status(200).json({ restaurants });
+    } catch (err) {
+        res.status(400).json({ msg: err });
+    }
+}
+
+module.exports = { userRegister, userLogin, getUsers, getRestaurants }
