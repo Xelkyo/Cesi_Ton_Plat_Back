@@ -1,6 +1,8 @@
-const nameurl = registry.services[req.params.apiName].url
+const registry = require('../routes/registry.json')
 
-fetch(nameurl + req.params.path, requestOption)
+const nameUrl = registry.services[req.params.apiName].url
+
+fetch(nameUrl + req.params.path, requestOption)
     .then((response) => {
         return response.json()
     })
