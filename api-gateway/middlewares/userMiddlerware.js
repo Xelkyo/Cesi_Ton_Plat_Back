@@ -15,3 +15,5 @@ const deliver = (req, res, next, requestOption) => {
             res.status(500).send('Internal Server Error')
         })
 }
+
+module.exports = deliver
