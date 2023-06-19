@@ -2,13 +2,14 @@ const express = require('express')
 const router = express.Router()
 const registry = require("./registry.json")
 
-const user = require('../middlewares/userMiddlerware')
+const { deliver } = require('../middlewares/userMiddlerware')
 
 
 router.all('/:apiName/:path', (req, res) => {
     console.log(req.params.apiName)
-
-    if (registry.services[req.params.apiName, req.params.path]) {
+    console.log(registry.services[req.params.apiName, req.params.path])
+    if (registry.services[req.params.apiName]
+        .action.includes(req.params.path)) {
 
         let requestOption
 
@@ -26,10 +27,8 @@ router.all('/:apiName/:path', (req, res) => {
         }
 
 
-        if (req.params.apiName == 'user'){
-            router.use('/', (req, res, next) => {
-                user.deliver(req, res, next, requestOption)
-            })
+        if (req.params.apiName == 'user') {
+            deliver(req, res, requestOption)
         }
 
 
