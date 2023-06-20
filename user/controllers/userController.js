@@ -60,7 +60,9 @@ const getUsers = async (req, res) => {
 const getRestaurants = async (req, res) => {
     try {
         const restaurants = await Restaurant.find();
-        res.status(200).json({ restaurants });
+        console.log(restaurants)
+        return res.status(200).json(restaurants);
+        
     } catch (err) {
         res.status(400).json({ msg: err });
     }

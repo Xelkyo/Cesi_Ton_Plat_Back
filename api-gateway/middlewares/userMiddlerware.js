@@ -9,7 +9,8 @@ const deliver = (req, res, requestOption) => {
             return response.json()
         })
         .then((data) => {
-            res.send(data.msg)
+            console.log(data)
+            res.send(data)
         })
         .catch((error) => {
             console.error(error)
