@@ -35,25 +35,25 @@ const userLogin = async (req, res) => {
         let user = await User.findOne({ email: req.body.email });
         if (user) {
             if (bcrypt.compareSync(req.body.password, user.password)) {
-                res.status(200).send({ msg: 'User logged in' });
+                return res.status(200).send({ msg: 'User logged in' });
             } else {
-                res.status(400).send({ msg: 'Wrong password' });
+                return res.status(400).send({ msg: 'Wrong password' });
             }
         } else {
-            res.status(400).send({ msg: 'User does not exist' });
+            return res.status(400).send({ msg: 'User does not exist' });
         }
     } catch (err) {
         console.log('Error here!')
-        res.status(500).send({ msg: 'Server error' });
+        return res.status(500).send({ msg: 'Server error' });
     }
 }
 
 const getUsers = async (req, res) => {
     try {
         const users = await User.find();
-        res.status(200).json({ users });
+        return res.status(200).json({ users });
     } catch (err) {
-        res.status(400).json({ msg: err });
+        return res.status(400).json({ msg: err });
     }
 }
 
@@ -64,7 +64,7 @@ const getRestaurants = async (req, res) => {
         return res.status(200).json(restaurants);
         
     } catch (err) {
-        res.status(400).json({ msg: err });
+        return res.status(400).json({ msg: err });
     }
 }
 
