@@ -5,7 +5,7 @@ const userRegister = async (req, res) => {
     const lastName = req.body.lastName;
     const firstName = req.body.firstName;
     const email = req.body.email;
-    const password = bcrypt.hashSync(req.body.password, 10);
+    const password = req.body.password;
     const address = req.body.address;
     const phone = req.body.phone;
     const birthday = req.body.birthday;
@@ -34,7 +34,7 @@ const userLogin = async (req, res) => {
     try {
         let user = await User.findOne({ email: req.body.email });
         if (user) {
-            if (bcrypt.compareSync(req.body.password, user.password)) {
+            if (req.body.password == user.password) {
                 return res.status(200).send({ msg: 'User logged in' });
             } else {
                 return res.status(400).send({ msg: 'Wrong password' });
