@@ -6,8 +6,7 @@ const { deliver } = require('../middlewares/userMiddlerware')
 
 
 router.all('/:apiName/:path', (req, res) => {
-    console.log(req.params.apiName)
-    console.log(registry.services[req.params.apiName, req.params.path])
+    
     if (registry.services[req.params.apiName]
         .action.includes(req.params.path)) {
 

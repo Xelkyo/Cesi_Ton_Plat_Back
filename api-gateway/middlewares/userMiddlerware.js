@@ -2,6 +2,7 @@ const registry = require('../routes/registry.json')
 
 const deliver = (req, res, requestOption) => {
     const nameUrl = registry.services[req.params.apiName].url
+    console.log(nameUrl + req.params.path)
 
     fetch(nameUrl + req.params.path, requestOption)
         .then((response) => {
@@ -16,4 +17,4 @@ const deliver = (req, res, requestOption) => {
         })
 }
 
-module.exports = {deliver}
+module.exports = { deliver }
