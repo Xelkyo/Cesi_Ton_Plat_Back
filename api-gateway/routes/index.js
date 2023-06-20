@@ -6,11 +6,12 @@ const { deliver } = require('../middlewares/userMiddlerware')
 
 
 router.all('/:apiName/:path', (req, res) => {
-    
+
     if (registry.services[req.params.apiName]
         .action.includes(req.params.path)) {
 
         let requestOption
+        console.table(req.headers)
 
         if (req.method == 'GET' || req.method == 'DELETE') {
             requestOption = {
