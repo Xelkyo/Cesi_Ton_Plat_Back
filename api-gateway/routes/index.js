@@ -6,34 +6,38 @@ const { deliver } = require('../middlewares/userMiddlerware')
 
 
 router.all('/:apiName/:path', (req, res) => {
+    console.log('ta race !\n')
+    if (req.method != 'OPTIONS') {
+        console.log('Tu vas marcher ?')
+        if (registry.services[req.params.apiName]
+            .action.includes(req.params.path)) {
 
-    if (registry.services[req.params.apiName]
-        .action.includes(req.params.path)) {
+            let requestOption
+            console.table(req.headers)
+            console.log(req.method)
 
-        let requestOption
-        console.table(req.headers)
-
-        if (req.method == 'GET' || req.method == 'DELETE') {
-            requestOption = {
-                method: req.method,
-                headers: req.headers
+            if (req.method == 'GET' || req.method == 'DELETE') {
+                requestOption = {
+                    method: req.method,
+                    headers: req.headers
+                }
+            } else {
+                requestOption = {
+                    method: req.method,
+                    headers: {'content-type': 'application/json'},
+                    body: JSON.stringify(req.body)
+                }
             }
+
+
+            if (req.params.apiName == 'user') {
+                deliver(req, res, requestOption)
+            }
+
+
         } else {
-            requestOption = {
-                method: req.method,
-                headers: req.headers,
-                body: req.body
-            }
+            res.send('API or service doesn\'t exists')
         }
-
-
-        if (req.params.apiName == 'user') {
-            deliver(req, res, requestOption)
-        }
-
-
-    } else {
-        res.send('API or service doesn\'t exists')
     }
 })
 
