@@ -10,6 +10,36 @@
                 "register",
                 "restaurants"
             ]
+        },
+        "menu": {
+            "apiName": "menu",
+            "host": "http://localhost",
+            "port": 3000,
+            "url": "http://localhost:3000/",
+            "action": [
+                "createMenu",
+                "updateMenu",
+                "getMenu",
+                "getMenuById",
+                "getMenus",
+                "deleteMenu",
+                "createItem",
+                "getItemById",
+                "updateItem",
+                "getItems",
+                "addMenuItem"
+            ]
+        },
+        "order": {
+            "apiName": "order",
+            "host": "http://localhost",
+            "port": 3030,
+            "url": "http://localhost:3030/order/",
+            "action": [
+                "createOrder",
+                "getOrderbyId",
+                "updateOrder"
+            ]
         }
     }
 }
