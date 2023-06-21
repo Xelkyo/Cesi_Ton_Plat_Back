@@ -7,7 +7,7 @@ const userRegister = async (req, res) => {
     const lastName = req.body.lastName;
     const firstName = req.body.firstName;
     const email = req.body.email;
-    const password = bcrypt.hashSync(req.body.password, 10);
+    const password = req.body.password;
     const address = req.body.address;
     const phone = req.body.phone;
     const birthday = req.body.birthday;
@@ -38,47 +38,32 @@ const userLogin = async (req, res) => {
     try {
         let user = await User.findOne({ email: req.body.email });
         if (user) {
-            if (bcrypt.compareSync(req.body.password, user.password)) {
-                //const token = jwtModule.createJwtToken(user);
-                //res.status(200).send({ msg: 'User logged in' });
-                if (user.role == 'customer') {
-                    return res.redirect('/customer');
-                } else if (user.role == 'restaurantmanager') {
-                    console.log('You are here!')
-                    return res.redirect('/restaurant');
-                } else if (user.role == 'delivery') {
-                    return res.redirect('/delivery');
-                } else if (user.role == 'salesperson') {
-                    return res.redirect('/sales');
-                } else {
-                    return res.status(400).send({ msg: 'Erro: User created without role' });
-                }
+            if (req.body.password == user.password) {
+                return res.status(200).send({ msg: 'User logged in' });
             } else {
-                res.status(400).send({ msg: 'Wrong password' });
+                return res.status(400).send({ msg: 'Wrong password' });
             }
         } else {
-            res.status(400).send({ msg: 'User does not exist' });
+            return res.status(400).send({ msg: 'User does not exist' });
         }
     } catch (err) {
         console.log('Error here!')
-        res.status(500).send({ msg: 'Server error' });
+        return res.status(500).send({ msg: 'Server error' });
     }
 }
 
 const getUsers = async (req, res) => {
     try {
-        //const users = await User.find();
-        // find all users of type customer, delivery and restaurantmanager
-        const users = await User.find({ $or: [ { role: 'customer' }, { role: 'delivery' }, { role: 'restaurantmanager' } ] });
+        const users = await User.find();
         res.status(200).json({ users });
     } catch (err) {
-        res.status(400).json({ msg: err });
+        return res.status(400).json({ msg: err });
     }
 }
 
 const getUserById = async (req, res) => {
     try {
-        const user = await User.findById(req.params.id);
+        const users = await User.find({ $or: [ { role: 'customer' }, { role: 'delivery' }, { role: 'restaurantmanager' } ] });
         res.status(200).json({ user });
     } catch (err) {
         res.status(400).json({ msg: err });
@@ -133,9 +118,11 @@ const deleteUser = async (req, res) => {
 const getRestaurants = async (req, res) => {
     try {
         const restaurants = await Restaurant.find();
-        res.status(200).json({ restaurants });
+        console.log(restaurants)
+        return res.status(200).json(restaurants);
+        
     } catch (err) {
-        res.status(400).json({ msg: err });
+        return res.status(400).json({ msg: err });
     }
 }
 
