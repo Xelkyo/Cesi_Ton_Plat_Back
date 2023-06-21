@@ -1,5 +1,7 @@
+const bcrypt = require('bcrypt')
 const User = require('../models/User')
 const Restaurant = require('../models/Restaurant')
+const jwtModule = require('../jwtModule')
 
 const userRegister = async (req, res) => {
     const lastName = req.body.lastName;
@@ -10,6 +12,8 @@ const userRegister = async (req, res) => {
     const phone = req.body.phone;
     const birthday = req.body.birthday;
     const role = req.body.role;
+
+    console.log('userRegister')
 
     // check if user already exists
     try {
@@ -51,9 +55,63 @@ const userLogin = async (req, res) => {
 const getUsers = async (req, res) => {
     try {
         const users = await User.find();
-        return res.status(200).json({ users });
+        res.status(200).json({ users });
     } catch (err) {
         return res.status(400).json({ msg: err });
+    }
+}
+
+const getUserById = async (req, res) => {
+    try {
+        const users = await User.find({ $or: [ { role: 'customer' }, { role: 'delivery' }, { role: 'restaurantmanager' } ] });
+        res.status(200).json({ user });
+    } catch (err) {
+        res.status(400).json({ msg: err });
+    }
+}
+
+const createUser = async (req, res) => {
+    try {
+        const user = await User.create(req.body);
+        res.status(200).json({ user });
+    } catch (err) {
+        res.status(400).json({ msg: err });
+    }
+}
+
+const updateUser = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (user) {
+            try {
+                const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+                res.status(200).json({ updatedUser });
+            } catch (err) {
+                res.status(400).json({ msg: err });
+            }
+        } else {
+            res.status(400).json({ msg: 'User does not exist' });
+        }
+    } catch (err) {
+        res.status(400).json({ msg: err });
+    }
+}
+
+const deleteUser = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (user) {
+            try {
+                const deletedUser = await User.findByIdAndDelete(req.params.id);
+                res.status(200).json({ deletedUser });
+            } catch (err) {
+                res.status(400).json({ msg: err });
+            }
+        } else {
+            res.status(400).json({ msg: 'User does not exist' });
+        }
+    } catch (err) {
+        res.status(400).json({ msg: err });
     }
 }
 
@@ -68,4 +126,4 @@ const getRestaurants = async (req, res) => {
     }
 }
 
-module.exports = { userRegister, userLogin, getUsers, getRestaurants }
+module.exports = { userRegister, userLogin, getUsers, getRestaurants, getUserById, createUser, updateUser, deleteUser }
