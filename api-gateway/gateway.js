@@ -8,8 +8,8 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
 // Gestion des CORS
-const corsMiddleware = require('./middlewares/corsMiddleware');
-app.options('*', corsMiddleware);
+const corsMiddleware = require('./middlewares/corsMiddleware')
+app.options('*', corsMiddleware)
 
 //Creation endpoint
 app.use('/', require('./routes/index'))

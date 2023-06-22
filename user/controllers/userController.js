@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt')
 const User = require('../models/User')
 const Restaurant = require('../models/Restaurant')
-const jwtModule = require('../jwtModule')
 
 const userRegister = async (req, res) => {
     const lastName = req.body.lastName;

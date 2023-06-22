@@ -1,7 +1,10 @@
 const registry = require('../routes/registry.json')
 
 const deliver = (req, res, requestOption) => {
-    const nameUrl = registry.services[req.params.apiName].url
+    let nameUrl
+    if(req.params.path == 'login' || req.params.path == 'register') {
+        nameUrl = registry.services[req.params.apiName].url + 'auth/'
+    }
     console.log(nameUrl + req.params.path)
     console.log(requestOption)
 
