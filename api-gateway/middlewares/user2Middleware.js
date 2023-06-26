@@ -1,11 +1,12 @@
 const registry = require('../routes/registry.json')
 
 const deliver2 = (req, res, requestOption) => {
-    const nameUrl = registry.services[req.params.apiName].url
+    const nameUrl = registry.services['user'].url
     console.log(nameUrl + req.params.path)
     console.log(requestOption)
 
-    fetch(nameUrl + req.params.path, requestOption)
+    fetch(nameUrl + registry.services['user'].action[req.params.path],
+        requestOption)
         .then((response) => {
             return response.json()
         })

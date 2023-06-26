@@ -1,0 +1,9 @@
+{
+    "apiName": "order",
+    "host": "http://localhost:",
+    "port": 3002,
+    "action": {
+        "neworder": "/order/order",
+        "orderid": "/order/order/"
+    }
+}
