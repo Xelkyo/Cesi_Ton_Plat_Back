@@ -138,6 +138,19 @@ const getRestaurantById = async (req, res) => {
     }
 }
 
+const getRestaurantsByManagerId = async (req, res) => {
+    try {
+        const restaurants = await Restaurant.find({ restaurantManagerId : req.params.id });
+        if (restaurant) {
+            return res.status(200).json(restaurant);
+        } else {
+            return res.status(400).json({ msg: 'Restaurant does not exist' });
+        }
+    } catch (err) {
+        return res.status(400).json({ msg: err });
+    }
+}
+
 const createRestaurant = async (req, res) => {
     try {
         const restaurant = await Restaurant.create(req.body);
@@ -147,4 +160,4 @@ const createRestaurant = async (req, res) => {
     }
 }
 
-module.exports = { userRegister, userLogin, getUsers, getRestaurants, getUserById, createUser, updateUser, deleteUser, getRestaurantById, createRestaurant }
+module.exports = { userRegister, userLogin, getUsers, getRestaurants, getUserById, createUser, updateUser, deleteUser, getRestaurantById, getRestaurantsByManagerId, createRestaurant }
