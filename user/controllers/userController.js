@@ -125,4 +125,17 @@ const getRestaurants = async (req, res) => {
     }
 }
 
-module.exports = { userRegister, userLogin, getUsers, getRestaurants, getUserById, createUser, updateUser, deleteUser }
+const getRestaurantById = async (req, res) => {
+    try {
+        const restaurant = await Restaurant.findById(req.params.id);
+        if (restaurant) {
+            return res.status(200).json(restaurant);
+        } else {
+            return res.status(400).json({ msg: 'Restaurant does not exist' });
+        }
+    } catch (err) {
+        return res.status(400).json({ msg: err });
+    }
+}
+
+module.exports = { userRegister, userLogin, getUsers, getRestaurants, getUserById, createUser, updateUser, deleteUser, getRestaurantById }
