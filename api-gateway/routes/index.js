@@ -62,8 +62,8 @@ router.all('/:apiName/:path', (req, res) => {
             }
 
             if (req.params.path == 'user' ||
-                req.params.path == 'user' ||
-                req.params.path == 'user') {
+                req.params.path == 'users' ||
+                req.params.path == 'userid') {
                 deliver2(req, res, requestOption)
             }
 

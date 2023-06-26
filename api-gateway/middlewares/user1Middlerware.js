@@ -7,12 +7,10 @@ const deliver1 = (req, res, requestOption) => {
 
     fetch(nameUrl + registry.services['user'].action[req.params.path],
         requestOption)
-        .then((response) => {
-            return response.json()
-        })
         .then((data) => {
             console.log(data)
-            res.send(data)
+            res.set('Content-Type', 'application/json'); // Définit l'en-tête Content-Type
+            res.send({ body: data }); // Envoie la réponse avec le corps spécifié
         })
         .catch((error) => {
             console.error(error)
@@ -20,4 +18,4 @@ const deliver1 = (req, res, requestOption) => {
         })
 }
 
-module.exports = { deliver1 }
+module.exports = { deliver1 } 
