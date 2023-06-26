@@ -138,4 +138,13 @@ const getRestaurantById = async (req, res) => {
     }
 }
 
-module.exports = { userRegister, userLogin, getUsers, getRestaurants, getUserById, createUser, updateUser, deleteUser, getRestaurantById }
+const createRestaurant = async (req, res) => {
+    try {
+        const restaurant = await Restaurant.create(req.body);
+        return res.status(200).json(restaurant);
+    } catch (err) {
+        return res.status(400).json({ msg: err });
+    }
+}
+
+module.exports = { userRegister, userLogin, getUsers, getRestaurants, getUserById, createUser, updateUser, deleteUser, getRestaurantById, createRestaurant }
