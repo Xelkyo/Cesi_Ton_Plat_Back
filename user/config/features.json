@@ -1,0 +1,13 @@
+{
+    "apiName": "user",
+    "host": "http://localhost:",
+    "port": 3000,
+    "action": {
+        "login": "/auth/login",
+        "register": "/auth/register",
+        "restaurants": "/auth/restaurants",
+        "user": "/user/user",
+        "users": "/user/users",
+        "userid": "/user/user/"
+    }
+}
