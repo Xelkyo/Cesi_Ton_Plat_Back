@@ -154,9 +154,12 @@ const getRestaurantsByManagerId = async (req, res) => {
 
 const createRestaurant = async (req, res) => {
     try {
+        console.log('happy new year!')
         const restaurant = await Restaurant.create(req.body);
+        console.log('you too')
         return res.status(200).json(restaurant);
     } catch (err) {
+        console.log(err)
         return res.status(400).json({ msg: err });
     }
 }

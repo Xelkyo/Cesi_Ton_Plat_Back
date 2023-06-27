@@ -36,4 +36,4 @@ const updateOrder = async (req, res) => {
     }
 }
 
-module.exports = { createOrder };
+module.exports = { createOrder, getOrderById, updateOrder };
