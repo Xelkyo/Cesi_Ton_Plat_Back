@@ -31,9 +31,7 @@ router.post('/book', (req, res) => {
 
 
 router.all('/:apiName/:path', (req, res) => {
-    console.log('ta race !\n')
     if (req.method != 'OPTIONS') {
-        console.log('Tu vas marcher ?')
         if (registry.services[req.params.apiName]
             .action[req.params.path]) {
 
