@@ -1,6 +1,6 @@
 const registry = require('../routes/registry.json')
 
-const deliver4 = (req, res, requestOption) => {
+const deliver3 = (req, res, requestOption) => {
     const nameUrl = registry.services[req.params.apiName].url
     console.log(nameUrl + req.params.path)
     console.log(requestOption)
@@ -19,4 +19,4 @@ const deliver4 = (req, res, requestOption) => {
         })
 }
 
-module.exports = { deliver4 }
+module.exports = { deliver3 }

@@ -3,10 +3,9 @@ const router = express.Router()
 const registry = require("./registry.json")
 const fs = require('fs')
 
-const { deliver1 } = require('../middlewares/user1Middlerware')
-const { deliver2 } = require('../middlewares/user2Middleware')
-const { deliver3 } = require('../middlewares/menuMiddleware')
-const { deliver4 } = require('../middlewares/orderMiddleware')
+const { deliver1 } = require('../middlewares/userMiddlerware')
+const { deliver2 } = require('../middlewares/menuMiddleware')
+const { deliver3 } = require('../middlewares/orderMiddleware')
 
 
 
@@ -58,11 +57,11 @@ router.all('/:apiName/:path', (req, res) => {
             }
 
             if (req.params.apiName == 'menu') {
-                deliver3(req, res, requestOption)
+                deliver2(req, res, requestOption)
             }
 
             if (req.params.apiName == 'order') {
-                deliver4(req, res, requestOption)
+                deliver3(req, res, requestOption)
             }
 
 

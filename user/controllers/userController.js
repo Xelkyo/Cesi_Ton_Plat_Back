@@ -22,13 +22,13 @@ const userRegister = async (req, res) => {
         } else {
             // create new user
             try {
-                await User.create({ lastName : lastName, firstName : firstName, email : email, password : password, role : role, address : address, phone : phone, birthday : birthday });
+                await User.create({ lastName: lastName, firstName: firstName, email: email, password: password, role: role, address: address, phone: phone, birthday: birthday });
                 return res.status(200).send({ msg: 'User created' });
             } catch (err) {
                 return res.status(400).send({ msg: err });
             }
         }
-    } catch(err) {
+    } catch (err) {
         return res.status(500).send({ msg: "Server error" });
     }
 }
@@ -38,7 +38,8 @@ const userLogin = async (req, res) => {
         let user = await User.findOne({ email: req.body.email });
         if (user) {
             if (req.body.password == user.password) {
-                return res.status(200).send({ body: 'ok' });
+                console.log(user._id)
+                return res.status(200).send({ body: user._id });
             } else {
                 return res.status(400).send({ msg: 'Wrong password' });
             }
@@ -63,7 +64,7 @@ const getUsers = async (req, res) => {
 
 const getUserById = async (req, res) => {
     try {
-        const users = await User.find({ $or: [ { role: 'customer' }, { role: 'delivery' }, { role: 'restaurantmanager' } ] });
+        const users = await User.find({ $or: [{ role: 'customer' }, { role: 'delivery' }, { role: 'restaurantmanager' }] });
         return res.status(200).json({ user });
     } catch (err) {
         return res.status(400).json({ msg: err });
@@ -120,7 +121,7 @@ const getRestaurants = async (req, res) => {
         const restaurants = await Restaurant.find();
         console.log(restaurants)
         return res.status(200).json(restaurants);
-        
+
     } catch (err) {
         return res.status(400).json({ msg: err });
     }
@@ -141,7 +142,7 @@ const getRestaurantById = async (req, res) => {
 
 const getRestaurantsByManagerId = async (req, res) => {
     try {
-        const restaurants = await Restaurant.find({ restaurantManagerId : req.params.id });
+        const restaurants = await Restaurant.find({ restaurantManagerId: req.params.id });
         if (restaurant) {
             return res.status(200).json(restaurant);
         } else {
