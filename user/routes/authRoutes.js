@@ -4,9 +4,5 @@ const userController = require('../controllers/userController')
 
 router.post('/login', userController.userLogin)
 router.post('/register', userController.userRegister)
-router.get('/restaurants', userController.getRestaurants) // accessed by customers only
-router.get('/restaurant/:id', userController.getRestaurantById)
-router.post('/restaurant', userController.createRestaurant)
-router.get('/restaurants/managers/:id', userController.getRestaurantsByManagerId)
 
 module.exports = router
