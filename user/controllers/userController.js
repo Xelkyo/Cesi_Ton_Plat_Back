@@ -35,7 +35,7 @@ const userRegister = async (req, res) => {
 
 const userLogin = async (req, res) => {
     try {
-        let user = await User.findOne({ email: req.body.email });
+        let user = await User.findOne({ email: req.body.email, role: req.body.role });
         if (user) {
             if (req.body.password == user.password) {
                 console.log(user._id)
@@ -154,8 +154,14 @@ const getRestaurantsByManagerId = async (req, res) => {
 }
 
 const createRestaurant = async (req, res) => {
+    const name = req.body.name;
+    const address = req.body.address;
+    const phone = req.body.phone;
+    const email = req.body.email;
+    const image = req.body.image;
+    const restaurantManagerId = req.params.id;
     try {
-        const restaurant = await Restaurant.create(req.body);
+        const restaurant = await Restaurant.create({ name : name, address : address, phone : phone, email : email, image : image, restaurantManagerId : restaurantManagerId });
         return res.status(200).json(restaurant);
     } catch (err) {
         console.log(err)
