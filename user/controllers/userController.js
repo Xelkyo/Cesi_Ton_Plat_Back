@@ -38,7 +38,7 @@ const userLogin = async (req, res) => {
         let user = await User.findOne({ email: req.body.email });
         if (user) {
             if (req.body.password == user.password) {
-                return res.status(200).send({ msg: 'ok' });
+                return res.status(200).send({ body: 'ok' });
             } else {
                 return res.status(400).send({ msg: 'Wrong password' });
             }
@@ -54,7 +54,8 @@ const userLogin = async (req, res) => {
 const getUsers = async (req, res) => {
     try {
         const users = await User.find();
-        res.status(200).json({ users });
+        console.log('Ok')
+        res.status(200).json({ body: users });
     } catch (err) {
         return res.status(400).json({ msg: err });
     }

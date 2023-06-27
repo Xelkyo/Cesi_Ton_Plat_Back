@@ -55,16 +55,8 @@ router.all('/:apiName/:path', (req, res) => {
             }
 
 
-            if (req.params.path == 'login' ||
-                req.params.path == 'register' ||
-                req.params.path == 'restaurants') {
+            if (req.params.apiName == 'user') {
                 deliver1(req, res, requestOption)
-            }
-
-            if (req.params.path == 'user' ||
-                req.params.path == 'users' ||
-                req.params.path == 'userid') {
-                deliver2(req, res, requestOption)
             }
 
             if (req.params.apiName == 'menu') {
