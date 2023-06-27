@@ -5,8 +5,8 @@
     "action": {
         "login": "/auth/login",
         "register": "/auth/register",
-        "restaurants": "/auth/restaurants",
-        "restaurant": "/auth/restaurant",
+        "restaurants": "/user/restaurants",
+        "restaurant": "/user/restaurant",
         "user": "/user/user",
         "users": "/user/users",
         "userid": "/user/user/"

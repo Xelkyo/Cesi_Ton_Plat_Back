@@ -25,10 +25,19 @@ const restaurantSchema = new mongoose.Schema({
         required: false,
         trim: true
     },
+    image: {
+        type: String,
+        required: false,
+        trim: true
+    },
     menus: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Menu'
-    }]
+    }],
+    items: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Item'
+    }],
 }, { timestamps: true })
 
 const Restaurant = mongoose.model('Restaurant', restaurantSchema)

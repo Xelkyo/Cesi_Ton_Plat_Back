@@ -55,7 +55,7 @@ const getUsers = async (req, res) => {
     try {
         const users = await User.find();
         console.log('Ok')
-        res.status(200).json({ body: users });
+        return res.status(200).json({ body: users });
     } catch (err) {
         return res.status(400).json({ msg: err });
     }
@@ -64,18 +64,18 @@ const getUsers = async (req, res) => {
 const getUserById = async (req, res) => {
     try {
         const users = await User.find({ $or: [ { role: 'customer' }, { role: 'delivery' }, { role: 'restaurantmanager' } ] });
-        res.status(200).json({ user });
+        return res.status(200).json({ user });
     } catch (err) {
-        res.status(400).json({ msg: err });
+        return res.status(400).json({ msg: err });
     }
 }
 
 const createUser = async (req, res) => {
     try {
         const user = await User.create(req.body);
-        res.status(200).json({ user });
+        return res.status(200).json({ user });
     } catch (err) {
-        res.status(400).json({ msg: err });
+        return res.status(400).json({ msg: err });
     }
 }
 
@@ -85,15 +85,15 @@ const updateUser = async (req, res) => {
         if (user) {
             try {
                 const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
-                res.status(200).json({ updatedUser });
+                return res.status(200).json({ updatedUser });
             } catch (err) {
-                res.status(400).json({ msg: err });
+                return res.status(400).json({ msg: err });
             }
         } else {
-            res.status(400).json({ msg: 'User does not exist' });
+            return res.status(400).json({ msg: 'User does not exist' });
         }
     } catch (err) {
-        res.status(400).json({ msg: err });
+        return res.status(400).json({ msg: err });
     }
 }
 
@@ -103,15 +103,15 @@ const deleteUser = async (req, res) => {
         if (user) {
             try {
                 const deletedUser = await User.findByIdAndDelete(req.params.id);
-                res.status(200).json({ deletedUser });
+                return res.status(200).json({ deletedUser });
             } catch (err) {
-                res.status(400).json({ msg: err });
+                return res.status(400).json({ msg: err });
             }
         } else {
-            res.status(400).json({ msg: 'User does not exist' });
+            return res.status(400).json({ msg: 'User does not exist' });
         }
     } catch (err) {
-        res.status(400).json({ msg: err });
+        return res.status(400).json({ msg: err });
     }
 }
 
