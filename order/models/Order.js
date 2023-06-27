@@ -16,9 +16,21 @@ const orderSchema = new mongoose.Schema({
         ref: 'User',
         required: false
     },
+    items: {
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Item' }],
+        required: [true, 'Items are required']
+    },
     menus: {
         type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Menu' }],
         required: [true, 'Menus are required']
+    },
+    deliveryAddress: {
+        type: String,
+        required: [true, 'Delivery address is required']
+    },
+    pickupAddress: {
+        type: String,
+        required: [true, 'Pickup address is required']
     },
     status: {
         type: String,
