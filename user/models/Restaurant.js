@@ -33,7 +33,11 @@ const restaurantSchema = new mongoose.Schema({
     menus: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Menu'
-    }]
+    }],
+    items: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Item'
+    }],
 }, { timestamps: true })
 
 const Restaurant = mongoose.model('Restaurant', restaurantSchema)
