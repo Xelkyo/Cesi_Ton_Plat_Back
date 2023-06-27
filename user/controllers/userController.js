@@ -35,7 +35,7 @@ const userRegister = async (req, res) => {
 
 const userLogin = async (req, res) => {
     try {
-        let user = await User.findOne({ email: req.body.email });
+        let user = await User.findOne({ email: req.body.email, role: req.body.role });
         if (user) {
             if (req.body.password == user.password) {
                 return res.status(200).send({ body: 'ok' });
