@@ -25,6 +25,11 @@ const restaurantSchema = new mongoose.Schema({
         required: false,
         trim: true
     },
+    image: {
+        type: String,
+        required: false,
+        trim: true
+    },
     menus: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Menu'
