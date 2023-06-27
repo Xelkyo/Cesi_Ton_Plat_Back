@@ -1,5 +1,4 @@
 const express = require('express')
-const path = require('path')
 const dotenv = require('dotenv').config()
 const port = process.env.PORT || 3000
 const authRoutes = require('./routes/authRoutes')
