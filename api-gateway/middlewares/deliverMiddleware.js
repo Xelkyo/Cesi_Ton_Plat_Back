@@ -4,7 +4,6 @@ const deliver = (req, res, requestOption, url, path) => {
     fetch(url, requestOption)
         .then((response) => {
             if (response.ok) {
-                console.log('ananas')
                 return response.json()
             } else {
                 throw new Error('Erreur lors de la requête fetch')
