@@ -64,7 +64,6 @@ router.all('/:apiName/:path', (req, res, next) => {
                 deliver3(req, res, requestOption)
             }
 
-            console.log('duriant')
         } else {
             return res.send('API or service doesn\'t exists')
         }

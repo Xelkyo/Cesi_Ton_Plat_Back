@@ -1,10 +1,8 @@
 const jwt = require('jsonwebtoken')
 
 const deliver = (req, res, requestOption, url, path) => {
-    console.log('chantilly')
     fetch(url, requestOption)
         .then((response) => {
-            console.log('fraise')
             if (response.ok) {
                 console.log('ananas')
                 return response.json()
@@ -35,7 +33,6 @@ const deliver = (req, res, requestOption, url, path) => {
 
 // Génération des JWT
 const generateToken = (id) => {
-    console.log('fruit du dragon')
     return jwt.sign({ id }, process.env.JWT_SECRET, {
         expiresIn: '1h'
     })

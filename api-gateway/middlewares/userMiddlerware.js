@@ -7,18 +7,17 @@ const { deliver } = require('./deliverMiddleware')
 
 const userHandler = (req, res, requestOption, next) => {
   const user = registry.services['user']
-  const url = user.url + user.action[req.params.path] 
+  const url = user.url + user.action[req.params.path]
   const path = req.params.path
   console.log(url)
   console.log(requestOption)
 
   if (req.params.path == 'login' || req.params.path == 'register') {
-    console.log('banane')
-    deliver(req, res, requestOption, url, path)
-  } 
+    return deliver(req, res, requestOption, url, path)
+  }
 
   if (req.params.path == 'restaurants' && protect(req, res, 1, next)) {
-    deliver(req, res, requestOption, url, path)
+    return deliver(req, res, requestOption, url, path)
   }
 
   if (req.params.path == 'restaurant' && protect(req, res, 2, next)) {
@@ -29,16 +28,15 @@ const userHandler = (req, res, requestOption, next) => {
 
     url += decoded.id
 
-    deliver(req, res, requestOption, url, path)
+    return deliver(req, res, requestOption, url, path)
   }
 
   if (protect(req, res, 5, next)) {
-    deliver(req, res, requestOption, url, path)
+    return deliver(req, res, requestOption, url, path)
   }
 
-  console.log('nutella')
-  //res.send('User not allowed to access this ressorce')
-  
+  res.send('User not allowed to access this ressorce')
+
 }
 
 
