@@ -12,21 +12,22 @@ const userHandler = (req, res, requestOption, next) => {
   console.log(url)
   console.log(requestOption)
 
-  if (req.params.path == 'login' || req.params.path == 'register') {
+  if (path == 'login' || path == 'register') {
     return deliver(req, res, requestOption, url, path)
   }
 
-  if (req.params.path == 'restaurants' && protect(req, res, 1, next)) {
+  if (path == 'restaurants' && protect(req, res, 1, next)) {
     return deliver(req, res, requestOption, url, path)
   }
 
-  if (req.params.path == 'restaurant' && protect(req, res, 2, next)) {
+  if (path == 'restaurant' && protect(req, res, 2, next)) {
     //get token from header
     token = req.headers.authorization.split(' ')[1]
     //verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
     url += decoded.id
+    console.log(url)
 
     return deliver(req, res, requestOption, url, path)
   }

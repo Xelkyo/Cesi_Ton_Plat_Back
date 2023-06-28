@@ -4,8 +4,8 @@ const registry = require("./registry.json")
 const fs = require('fs')
 
 const { userHandler } = require('../middlewares/userMiddlerware')
-const { deliver2 } = require('../middlewares/menuMiddleware')
-const { deliver3 } = require('../middlewares/orderMiddleware')
+const { menuHandler } = require('../middlewares/menuMiddleware')
+const { orderHandler } = require('../middlewares/orderMiddleware')
 
 
 
@@ -57,11 +57,11 @@ router.all('/:apiName/:path', (req, res, next) => {
             }
 
             if (req.params.apiName == 'menu') {
-                deliver2(req, res, requestOption)
+                menuHandler(req, res, requestOption)
             }
 
             if (req.params.apiName == 'order') {
-                deliver3(req, res, requestOption)
+                orderHandler(req, res, requestOption)
             }
 
         } else {

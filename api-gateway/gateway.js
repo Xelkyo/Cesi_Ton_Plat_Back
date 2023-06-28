@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
+const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv').config()
 const port = process.env.PORT || 5000
 
@@ -23,6 +24,8 @@ var corsoption = {
     "optionsSuccessStatus": 204
 }
 app.use(cors(corsoption))
+
+app.use(cookieParser())
 
 
 //Creation endpoint

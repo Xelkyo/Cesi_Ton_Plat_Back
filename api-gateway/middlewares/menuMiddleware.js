@@ -1,22 +1,35 @@
 const registry = require('../routes/registry.json')
+const jwt = require('jsonwebtoken')
 
-const deliver2 = (req, res, requestOption) => {
-    const nameUrl = registry.services[req.params.apiName].url
-    console.log(nameUrl + req.params.path)
-    console.log(requestOption)
+const { protect } = require('./authMiddleware')
+const { deliver } = require('./deliverMiddleware')
 
-    fetch(nameUrl + req.params.path, requestOption)
-        .then((response) => {
-            return response.json()
-        })
-        .then((data) => {
-            console.log(data)
-            res.send(data)
-        })
-        .catch((error) => {
-            console.error(error)
-            res.status(500).send('Internal Server Error')
-        })
+
+const menuHandler = (req, res, requestOption, next) => {
+  const user = registry.services['menu']
+  const url = user.url + user.action[req.params.path]
+  const path = req.params.path
+  console.log(url)
+  console.log(requestOption)
+
+  if ((path == 'menus' || path == 'items') && protect(req, res, 4, next)) {
+    const id = requestOption.body.id
+    return deliver(req, res, requestOption, url, path)
+  }
+
+  if ((path == 'menu' || path == 'item') && protect(req, res, 2, next)) {
+    return deliver(req, res, requestOption, url, path)
+  }
+
+  if (protect(req, res, 2, next)) {
+    //Add Id objet dans url
+    return deliver(req, res, requestOption, url, path)
+  }
+
+  res.send('User not allowed to access this ressorce')
+
 }
 
-module.exports = { deliver2 }
+
+
+module.exports = { menuHandler } 

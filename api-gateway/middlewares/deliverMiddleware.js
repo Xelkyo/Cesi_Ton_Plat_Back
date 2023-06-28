@@ -15,7 +15,7 @@ const deliver = (req, res, requestOption, url, path) => {
                 const token = generateToken(data.body)
                 console.log(token)
                 res.cookie('token', token, {
-                    domain: 'localhost:5173',
+                    httpOnly: true,
                     sameSite: 'Lax',
                     maxAge: 3600000 //durée de vie des tokens en millisecondes : 1h
                 })

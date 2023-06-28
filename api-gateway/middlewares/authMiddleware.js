@@ -11,7 +11,8 @@ const protect = (req, res, category, next) => {
             //verify token
             const decoded = jwt.verify(token, process.env.JWT_SECRET)
             //get user from token
-            let user = User.findById(decoded.id).select('-password')
+            const user = User.findById(decoded.id).select('-password')
+            console.log(user)
 
 
             if (!user) {
