@@ -1,62 +1,38 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
     lastName: {
-        type: String,
-        required: [true, 'Last name is required'],
-        trim: true
+        type: String
     },
     firstName: {
-        type: String,
-        required: [true, 'First name is required'],
-        trim: true
+        type: String
     },
     email: {
         type: String,
-        required: [true, 'Email is required'],
         unique: true,
         lowercase: true,
-        trim: true
     },
     password: {
-        type: String,
-        required: [true, 'Password is required'],
-        minlength: [6, 'Password must be at least 6 characters long']
+        type: String
     },
     address: {
-        type: String,
-        required: false,
-        trim: true
+        type: String
     },
     phone: {
-        type: String,
-        required: false,
-        trim: true
+        type: String
     },
     birthday: {
-        type: Date,
-        required: false
+        type: Date
     },
     role: {
-        type: String,
-        required: [true, 'Role is required'],
-        enum: ['customer', 'salesperson', 'restaurantmanager', 'deliveryperson']
+        type: String
     },
     transport: {
-        type: String,
-        enum: ['motorbike', 'bicycle', 'car', 'other'],
-        default: function() {
-            return this.role === 'deliveryperson' ? 'other' : undefined;
-        }
+        type: String
     },
     restaurants: {
-        type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant' }],
-        default: function() {
-            return this.role === 'restaurantmanager' ? [] : undefined;
-        }
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Restaurant' }]
     }
 }, { timestamps: true })
 
-const User = mongoose.model('User', userSchema)
-
-module.exports =  User
+module.exports = mongoose.model('User', userSchema)
