@@ -14,15 +14,16 @@ const deliver = (req, res, requestOption, url, path) => {
             if (path == 'login') {
                 const token = generateToken(data.body)
                 console.log(token)
-                res.cookie('token', token, {
-                    domain: 'localhost:5173',
-                    sameSite: 'Lax',
-                    maxAge: 3600000 //durée de vie des tokens en millisecondes : 1h
-                })
-                return res.send({ body: 'ok' })
-            } else {
-                return res.send({ body: data })
-            }
+                // res.cookie('token', token, {
+                //     domain: 'localhost:5173/logIn',
+                //     sameSite: 'Lax',
+                //     maxAge: 3600000 //durée de vie des tokens en millisecondes : 1h
+                // })
+                return res.send({token});
+                //return res.send({ body: 'ok' })
+             } else {
+                 return res.send({ body: data })
+             }
         })
         .catch((error) => {
             console.error(error)
