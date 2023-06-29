@@ -134,6 +134,24 @@ const getItems = async (req, res) => {
     }
 }
 
+const deleteItem = async (req, res) => {
+    try {
+        const item = await MenuItem.findById(req.params.id);
+        if (item) {
+            try {
+                await MenuItem.findByIdAndDelete(req.params.id, req.body, { new: true });
+                return res.status(200).json({ msg: 'Item deleted' });
+            } catch (err) {
+                return res.status(400).json({ msg: err });
+            }
+        } else {
+            return res.status(400).json({ msg: 'Item does not exist' });
+        }
+    } catch (err) {
+        return res.status(400).json({ msg: err });
+    }
+}
+
 const addMenuItem = async (req, res) => {
     try {
         const menu = await Menu.findById(req.params.id);
@@ -146,4 +164,4 @@ const addMenuItem = async (req, res) => {
     }
 }
 
-module.exports = { createMenu, getMenu, getMenuById, getMenus, addMenuItem, getItemById, createItem, updateItem, getItems, updateMenu, deleteMenu }
+module.exports = { createMenu, getMenu, getMenuById, getMenus, addMenuItem, getItemById, createItem, updateItem, getItems, deleteItem, updateMenu, deleteMenu }

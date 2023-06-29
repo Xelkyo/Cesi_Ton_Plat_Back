@@ -12,5 +12,6 @@ router.get('/items/:idmanag', menuController.getItems)
 router.get('/item/:id', menuController.getItemById)
 router.post('/item', menuController.createItem)
 router.put('/item/:id', menuController.updateItem)
+router.delete('/item/:id', menuController.deleteItem)
 
 module.exports = router
