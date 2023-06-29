@@ -3,7 +3,9 @@
     "host": "http://localhost:",
     "port": 3002,
     "action": {
-        "neworder": "/order/order",
-        "orderid": "/order/order/"
+        "order": "/order/order",
+        "orders": "/order/orders",
+        "orderid": "/order/order/",
+        "orderuser": "/order/user/"
     }
 }

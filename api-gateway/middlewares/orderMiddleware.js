@@ -1,22 +1,83 @@
 const registry = require('../routes/registry.json')
+const User = require('../models/userModel')
+const Resto = require('../models/restaurantModel')
 
-const deliver3 = (req, res, requestOption) => {
-    const nameUrl = registry.services[req.params.apiName].url
-    console.log(nameUrl + req.params.path)
+const { protect } = require('./authMiddleware')
+const { deliver } = require('./deliverMiddleware')
+
+
+const orderHandler = async (req, res, requestOption) => {
+    const user = registry.services['order']
+    const url = user.url + user.action[req.params.path]
+    const path = req.params.path
+    let token
+    let status = true
+    console.log(url)
     console.log(requestOption)
 
-    fetch(nameUrl + req.params.path, requestOption)
-        .then((response) => {
-            return response.json()
-        })
-        .then((data) => {
-            console.log(data)
-            res.send(data)
-        })
-        .catch((error) => {
-            console.error(error)
-            res.status(500).send('Internal Server Error')
-        })
+    try {
+        token = req.headers['authorization'].split(' ')[1]
+        console.log(token)
+    } catch {
+        console.log('No token sent')
+        status = false
+        return res.send('No token sent')
+    }
+
+    
+    if (path == 'orderuser' && await protect(req, res, 5, token)) {
+
+        // FAIRE DISTINCTION ENTRE UTILISATEURS 
+        const newRequestOption = {
+            method: 'GET',
+            headers: { 'content-type': 'application/json' }
+        }
+
+        const newUrl = url + req.body.restaurantId
+        console.log(newUrl)
+
+        return deliver(req, res, newRequestOption, newUrl, path)
+    }
+
+    if (path == 'order'  && await protect(req, res, 5, token)) {
+        console.log(requestOption.body)
+        const bodyObj = JSON.parse(requestOption.body)
+        const restId = bodyObj.restaurantId
+        const userId = bodyObj.customerId
+
+        const resto = await Resto.findOne({ _id: restId })
+        const user = await User.findOne({ _id: userId })
+
+        console.log(resto)
+        console.log(user)
+
+        const newRequestOption = {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({
+                restaurantId: restId,
+                restaurantName: resto.name,
+                customerId: userId,
+                customerName: user.firstName + ' ' + user.lastName,
+                customerNumber: user.phone,
+                items: requestOption.body.order_Items,
+                deliveryAddress: user.address,
+                pickupAddress: resto.address,
+                totalPrice: bodyObj.price
+            })
+        }
+
+        return deliver(req, res, newRequestOption, url, path)
+    }
+
+    if (path == 'orderid' && await protect(req, res, 5, token)) {
+        //Add id de la commande dans url
+        return deliver(req, res, requestOption, url, path)
+    }
+
+    if (status) {
+        return res.send('User is not allowed to access this ressorce')
+    }
 }
 
-module.exports = { deliver3 }
+module.exports = { orderHandler }
