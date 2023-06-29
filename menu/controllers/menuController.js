@@ -125,6 +125,7 @@ const getItems = async (req, res) => {
     try {
         const items = await MenuItem.find({ restaurantId: req.params.idmanag });
         if (items) {
+            console.log(items)
             return res.status(200).json(items);
         } else {
             return res.status(200).json([]);
