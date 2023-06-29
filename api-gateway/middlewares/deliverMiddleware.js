@@ -10,22 +10,19 @@ const deliver = async (req, res, requestOption, url, path) => {
             }
         })
         .then( async (data) => {
-            console.log(data)
+            console.log('Data : \n' + data)
             if (path == 'login') {
                 const token = generateToken(data.body)
-                console.log(token)
-                // res.cookie('token', token, {
-                //     domain: 'localhost:5173/logIn',
-                //     sameSite: 'Lax',
-                //     maxAge: 3600000 //durée de vie des tokens en millisecondes : 1h
-                // })
+                //console.log(token)
+                console.log('Send token')
                 return await res.send({token});
-                //return res.send({ body: 'ok' })
              } else {
+                console.log('Send response without token')
                  return await res.send({ body: data })
              }
         })
         .catch( async (error) => {
+            console.log('deliverMiddleware.js')
             console.error(error)
             return await res.status(500).send('Internal Server Error')
         })

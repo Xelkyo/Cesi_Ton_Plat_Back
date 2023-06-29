@@ -9,23 +9,23 @@ const userHandler = async (req, res, requestOption, next) => {
   const user = registry.services['user']
   const url = user.url + user.action[req.params.path]
   const path = req.params.path
-  const token = req.body.token
-  console.log(token)
   console.log(url)
-  console.log(requestOption)
-
-  if (path == 'login' || path == 'register') {
-    return deliver(req, res, requestOption, url, path)
+  let token
+  //console.log(requestOption)
+  try {
+    token = req.headers['authorization'].split(' ')[1]
+    console.log(token)
+  }
+  catch {
+    if (path == 'login' || path == 'register') {
+      return deliver(req, res, requestOption, url, path)
+    } else {
+      return res.send('No token sent')
+    }
   }
 
   if (path == 'restaurants' && await protect(req, res, 1, token)) {
-
-    const newRequestOption = {
-      method: 'GET',
-      headers: { 'content-type': 'application/json' }
-    }
-
-    return deliver(req, res, newRequestOption, url, path)
+    return deliver(req, res, requestOption, url, path)
   }
 
   if (path == 'restaurant' && await protect(req, res, 2, token)) {
@@ -39,16 +39,10 @@ const userHandler = async (req, res, requestOption, next) => {
     const newUrl = url + decoded.id
     console.log(newUrl)
 
-    const newRequestOption = {
-      method: 'GET',
-      headers: { 'content-type': 'application/json' }
-    }
-
-    return deliver(req, res, newRequestOption, newUrl, path)
+    return deliver(req, res, requestOption, newUrl, path)
   }
 
   if (path == 'restaurantid' && await protect(req, res, 4, token)) {
-
     const newRequestOption = {
       method: 'GET',
       headers: { 'content-type': 'application/json' }
@@ -57,10 +51,12 @@ const userHandler = async (req, res, requestOption, next) => {
     return deliver(req, res, newRequestOption, url, path)
   }
 
-  if (await protect(req, res, 5, token)) {
+  if (path == 'userid' && await protect(req, res, 5, token)) {
+    console.log('6')
+    //Add id user dans url
     return deliver(req, res, requestOption, url, path)
   }
-
+  console.log('userMiddleware.js')
   return res.send('User not allowed to access this ressorce')
 
 }

@@ -65,6 +65,7 @@ router.all('/:apiName/:path', async (req, res, next) => {
             }
 
         } else {
+            console.log('index.js')
             return res.send('API or service doesn\'t exists')
         }
     }

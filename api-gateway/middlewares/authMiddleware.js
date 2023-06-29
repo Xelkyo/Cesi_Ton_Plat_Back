@@ -1,55 +1,84 @@
 const jwt = require('jsonwebtoken')
 const User = require('../models/userModel')
+const { decode } = require('punycode')
 
 const protect = async (req, res, category, token) => {
 
 
     if (!token) {
-        return res.status(401).send('Not authorized, no token')
+        console.log('No token')
+        return false
     }
 
     try {
         //verify token
         const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        console.log('\n Decoded : \n')
-        console.log(decoded)
-        console.log(decoded.id)
+        //console.log('\n Decoded : \n')
+        //console.log(decoded)
+
+        if (!decoded) { console.log('Pas token') }
+        else { 'Ok token' }
+
+        console.log('id :' + decoded.id)
         //get user from token
-        const user = await User.findOne({_id: decoded.id})
-        console.log('\n User : \n')
-        console.log(user)
+        const user = await User.findOne({ _id: decoded.id })
+        //console.log('\n User : \n')
+        //console.log(user)
 
 
         if (!user) {
-            return res.status(404).send('Not authorized')
+            console.log('No user')
+            return false
         }
 
         if (category == 1) {
-            if (user.role == 'customer') { return true }
+            console.log(category)
+            if (user.role == 'customer') {
+                console.log('yes')
+                return true
+            }
         }
 
         if (category == 2) {
-            if (user.role == 'restaurantmanager') { return true }
+            console.log(category)
+            if (user.role == 'restaurantmanager') {
+                console.log('yes')
+                return true
+            }
         }
 
         if (category == 3) {
-            if (user.role == 'deliveryperson') { return true }
+            console.log(category)
+            if (user.role == 'deliveryperson') {
+                console.log('yes')
+                return true
+            }
         }
 
         if (category == 4) {
+            console.log(category)
             if (user.role == 'customer' ||
-                user.role == 'restaurantmanager') { return true }
+                user.role == 'restaurantmanager') {
+                    console.log('yes')
+                return true
+            }
         }
 
         if (category == 5) {
+            console.log(category)
             if (user.role == 'customer' ||
                 user.role == 'restaurantmanager' ||
-                user.role == 'deliveryperson') { return true }
+                user.role == 'deliveryperson') {
+                    console.log('yes')
+                return true
+            }
         }
 
         return false
 
-    } catch {
+    } catch (err) {
+        console.log('authMiddleware.js')
+        console.log(err)
         return res.status(401).send('Not authorized')
     }
 }

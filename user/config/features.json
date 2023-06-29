@@ -8,7 +8,7 @@
         "restaurants": "/user/restaurants",
         "restaurant": "/user/restaurant",
         "restaurantid": "/user/restaurant/",
-        "restaurantmanagid": "/restaurants/manager/",
+        "restaurantmanagid": "/user/restaurants/manager/",
         "user": "/user/user",
         "users": "/user/users",
         "userid": "/user/user/"

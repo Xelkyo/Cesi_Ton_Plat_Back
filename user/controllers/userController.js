@@ -141,11 +141,16 @@ const getRestaurantById = async (req, res) => {
 }
 
 const getRestaurantsByManagerId = async (req, res) => {
+    console.log('Nice to meet you')
     try {
+        console.log('Hey')
         const restaurants = await Restaurant.find({ restaurantManagerId: req.params.id });
-        if (restaurant) {
-            return res.status(200).json(restaurant);
+        console.log(restaurants)
+        if (restaurants) {
+            console.log('Yes !!')
+            return res.status(200).json(restaurants);
         } else {
+            console.log('NoooOOOOooooo !')
             return res.status(400).json({ msg: 'Restaurant does not exist' });
         }
     } catch (err) {
