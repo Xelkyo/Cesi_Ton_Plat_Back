@@ -60,7 +60,7 @@ const orderHandler = async (req, res, requestOption) => {
                 customerId: userId,
                 customerName: user.firstName + ' ' + user.lastName,
                 customerNumber: user.phone,
-                items: requestOption.body.order_Items,
+                items: bodyObj.order_Items,
                 deliveryAddress: user.address,
                 pickupAddress: resto.address,
                 totalPrice: bodyObj.price
