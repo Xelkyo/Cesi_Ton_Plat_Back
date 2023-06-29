@@ -55,13 +55,16 @@ const userHandler = async (req, res, requestOption, next) => {
 
   if (path == 'userid' && await protect(req, res, 5, token)) {
     console.log('6')
-    //Add id user dans url
-    return deliver(req, res, requestOption, url, path)
+    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+
+    const newUrl = url + decoded.id
+    console.log(newUrl)
+    return deliver(req, res, requestOption, newUrl, path)
   }
 
   if (state) {
     console.log('userMiddleware.js')
-    return res.send('User not allowed to access this ressorce')
+    return res.send('User is not allowed to access this ressorce')
   }
 
 }

@@ -5,6 +5,9 @@
     "action": {
         "menu": "/menu",
         "menus": "/menus",
-        "menuid": "/menu/"
+        "menuid": "/menu/",
+        "item": "/item",
+        "items": "/items",
+        "itemid": "/item/"
     }
 }

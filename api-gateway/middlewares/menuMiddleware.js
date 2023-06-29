@@ -14,20 +14,28 @@ const menuHandler = (req, res, requestOption, next) => {
   console.log(requestOption)
 
   if ((path == 'menus' || path == 'items') && protect(req, res, 4, next)) {
-    const id = requestOption.body.id
-    return deliver(req, res, requestOption, url, path)
+
+    const newRequestOption = {
+      method: 'GET',
+      headers: { 'content-type': 'application/json' }
+    }
+
+    const newUrl = url + req.body.restaurantId
+    console.log(newUrl)
+
+    return deliver(req, res, newRequestOption, newUrl, path)
   }
 
   if ((path == 'menu' || path == 'item') && protect(req, res, 2, next)) {
     return deliver(req, res, requestOption, url, path)
   }
 
-  if (protect(req, res, 2, next)) {
+  if ((path == 'menuid' || path == 'itemid') && protect(req, res, 2, next)) {
     //Add Id objet dans url
     return deliver(req, res, requestOption, url, path)
   }
 
-  res.send('User not allowed to access this ressorce')
+  res.send('User is not allowed to access this ressorce')
 
 }
 

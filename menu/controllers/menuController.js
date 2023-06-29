@@ -53,8 +53,12 @@ const getMenuById = async (req, res) => {
 
 const getMenus = async (req, res) => {
     try {
-        const menus = await Menu.find();
-        return res.status(200).json({ menus });
+        const menus = await Menu.find({restaurantId: req.params.idmanag});
+        if(menus) {
+            return res.status(200).json({ menus });
+        } else{
+            return res.status(200).json([]);
+        }
     } catch (err) {
         return res.status(400).json({ msg: err });
     }
@@ -118,8 +122,12 @@ const updateItem = async (req, res) => {
 
 const getItems = async (req, res) => {
     try {
-        const items = await MenuItem.find();
-        return res.status(200).json({ items });
+        const items = await MenuItem.find({restaurantId: req.params.idmanag});
+        if(items) {
+            return res.status(200).json({ items });
+        } else{
+            return res.status(200).json([]);
+        }
     } catch (err) {
         return res.status(400).json({ msg: err });
     }
