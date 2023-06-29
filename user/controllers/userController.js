@@ -164,7 +164,7 @@ const createRestaurant = async (req, res) => {
     const phone = req.body.phone;
     const email = req.body.email;
     const image = req.body.image;
-    const restaurantManagerId = req.params.id;
+    const restaurantManagerId = req.body.id;
     try {
         const restaurant = await Restaurant.create({ name : name, address : address, phone : phone, email : email, image : image, restaurantManagerId : restaurantManagerId });
         return res.status(200).json(restaurant);
