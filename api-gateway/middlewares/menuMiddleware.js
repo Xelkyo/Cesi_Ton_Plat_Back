@@ -3,17 +3,28 @@ const jwt = require('jsonwebtoken')
 
 const { protect } = require('./authMiddleware')
 const { deliver } = require('./deliverMiddleware')
+const { stat } = require('fs')
 
 
 const menuHandler = (req, res, requestOption, next) => {
   const user = registry.services['menu']
   const url = user.url + user.action[req.params.path]
   const path = req.params.path
-  const token = req.params.token
+  let token
+  let status = true
   console.log(url)
   console.log(requestOption)
 
-  if ((path == 'menus' || path == 'items') && protect(req, res, 4, next)) {
+  try {
+    token = req.headers['authorization'].split(' ')[1]
+    console.log(token)
+  } catch {
+    console.log('No token sent')
+    status = false
+    return res.send('No token sent')
+  }
+
+  if ((path == 'menus' || path == 'items') && protect(req, res, 4, token)) {
 
     const newRequestOption = {
       method: 'GET',
@@ -26,17 +37,18 @@ const menuHandler = (req, res, requestOption, next) => {
     return deliver(req, res, newRequestOption, newUrl, path)
   }
 
-  if ((path == 'menu' || path == 'item') && protect(req, res, 2, next)) {
+  if ((path == 'menu' || path == 'item') && protect(req, res, 2, token)) {
     return deliver(req, res, requestOption, url, path)
   }
 
-  if ((path == 'menuid' || path == 'itemid') && protect(req, res, 2, next)) {
+  if ((path == 'menuid' || path == 'itemid') && protect(req, res, 2, token)) {
     //Add Id objet dans url
     return deliver(req, res, requestOption, url, path)
   }
 
-  res.send('User is not allowed to access this ressorce')
-
+  if (status) {
+    return res.send('User is not allowed to access this ressorce')
+  }
 }
 
 

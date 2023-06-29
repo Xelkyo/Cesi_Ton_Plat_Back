@@ -54,7 +54,6 @@ const userHandler = async (req, res, requestOption, next) => {
   }
 
   if (path == 'userid' && await protect(req, res, 5, token)) {
-    console.log('6')
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
     const newUrl = url + decoded.id

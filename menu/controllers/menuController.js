@@ -85,10 +85,13 @@ const deleteMenu = async (req, res) => {
 // Item CRUD
 
 const createItem = async (req, res) => {
+    console.log('arrivé')
     try {
         const item = await MenuItem.create(req.body);
+        console.log('Créé')
         return res.status(200).json({ item });
     } catch (err) {
+        console.log(err)
         return res.status(400).json({ msg: err });
     }
 }

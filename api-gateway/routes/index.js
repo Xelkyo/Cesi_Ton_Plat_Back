@@ -46,7 +46,7 @@ router.all('/:apiName/:path', async (req, res, next) => {
             } else {
                 requestOption = {
                     method: req.method,
-                    headers: { 'content-type': 'application/json' },
+                    headers: req.headers,
                     body: JSON.stringify(req.body)
                 }
             }
