@@ -21,8 +21,12 @@ const getOrders = async (req, res) => {
 
 const getOrderById = async (req, res) => {
     try {
-        const order = await Order.findById(req.params.id);
-        res.status(200).json({ order });
+        const order = await Order.find({
+            restaurantId: req.params.id,
+            status: ('pending' || 'preparing' || 'ready')
+        });
+        if (order) { res.status(200).json(order); }
+        else { res.status(200).json([]); }
     } catch (err) {
         res.status(400).json({ msg: err });
     }

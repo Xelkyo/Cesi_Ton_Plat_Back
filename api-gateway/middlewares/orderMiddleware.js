@@ -24,7 +24,7 @@ const orderHandler = async (req, res, requestOption) => {
         return res.send('No token sent')
     }
 
-    
+
     if (path == 'orderuser' && await protect(req, res, 5, token)) {
 
         // FAIRE DISTINCTION ENTRE UTILISATEURS 
@@ -39,7 +39,7 @@ const orderHandler = async (req, res, requestOption) => {
         return deliver(req, res, newRequestOption, newUrl, path)
     }
 
-    if (path == 'order'  && await protect(req, res, 5, token)) {
+    if (path == 'order'  && await protect(req, res, 1, token)) {
         console.log(requestOption.body)
         const bodyObj = JSON.parse(requestOption.body)
         const restId = bodyObj.restaurantId
@@ -71,8 +71,15 @@ const orderHandler = async (req, res, requestOption) => {
     }
 
     if (path == 'orderid' && await protect(req, res, 5, token)) {
-        //Add id de la commande dans url
-        return deliver(req, res, requestOption, url, path)
+        const newRequestOption = {
+            method: 'GET',
+            headers: { 'content-type': 'application/json' }
+          }
+      
+          const newUrl = url + req.body.restaurantId
+          console.log(newUrl)
+      
+          return deliver(req, res, newRequestOption, newUrl, path)
     }
 
     if (status) {
