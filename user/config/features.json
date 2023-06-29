@@ -6,7 +6,9 @@
         "login": "/auth/login",
         "register": "/auth/register",
         "restaurants": "/user/restaurants",
-        "restaurant": "/user/restaurant/",
+        "restaurant": "/user/restaurant",
+        "restaurantid": "/user/restaurant/",
+        "restaurantmanagid": "/restaurants/manager/",
         "user": "/user/user",
         "users": "/user/users",
         "userid": "/user/user/"

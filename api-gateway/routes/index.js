@@ -29,7 +29,7 @@ router.post('/book', (req, res) => {
 
 
 
-router.all('/:apiName/:path', (req, res, next) => {
+router.all('/:apiName/:path', async (req, res, next) => {
     if (req.method != 'OPTIONS') {
         if (registry.services[req.params.apiName]
             .action[req.params.path]) {
@@ -53,15 +53,15 @@ router.all('/:apiName/:path', (req, res, next) => {
 
 
             if (req.params.apiName == 'user') {
-                userHandler(req, res, requestOption, next)
+                await userHandler(req, res, requestOption, next)
             }
 
             if (req.params.apiName == 'menu') {
-                menuHandler(req, res, requestOption)
+                await menuHandler(req, res, requestOption)
             }
 
             if (req.params.apiName == 'order') {
-                orderHandler(req, res, requestOption)
+                await orderHandler(req, res, requestOption)
             }
 
         } else {

@@ -5,10 +5,12 @@ const { protect } = require('./authMiddleware')
 const { deliver } = require('./deliverMiddleware')
 
 
-const userHandler = (req, res, requestOption, next) => {
+const userHandler = async (req, res, requestOption, next) => {
   const user = registry.services['user']
   const url = user.url + user.action[req.params.path]
   const path = req.params.path
+  const token = req.body.token
+  console.log(token)
   console.log(url)
   console.log(requestOption)
 
@@ -16,27 +18,50 @@ const userHandler = (req, res, requestOption, next) => {
     return deliver(req, res, requestOption, url, path)
   }
 
-  if (path == 'restaurants' && protect(req, res, 1, next)) {
-    return deliver(req, res, requestOption, url, path)
+  if (path == 'restaurants' && await protect(req, res, 1, token)) {
+
+    const newRequestOption = {
+      method: 'GET',
+      headers: { 'content-type': 'application/json' }
+    }
+
+    return deliver(req, res, newRequestOption, url, path)
   }
 
-  if (path == 'restaurant' && protect(req, res, 2, next)) {
-    //get token from header
-    token = req.headers.authorization.split(' ')[1]
+  if (path == 'restaurant' && await protect(req, res, 2, token)) {
+    return deliver(req, res, newRequestOption, url, path)
+  }
+
+  if (path == 'restaurantmanagid' && await protect(req, res, 2, token)) {
     //verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
-    url += decoded.id
-    console.log(url)
+    const newUrl = url + decoded.id
+    console.log(newUrl)
 
+    const newRequestOption = {
+      method: 'GET',
+      headers: { 'content-type': 'application/json' }
+    }
+
+    return deliver(req, res, newRequestOption, newUrl, path)
+  }
+
+  if (path == 'restaurantid' && await protect(req, res, 4, token)) {
+
+    const newRequestOption = {
+      method: 'GET',
+      headers: { 'content-type': 'application/json' }
+    }
+
+    return deliver(req, res, newRequestOption, url, path)
+  }
+
+  if (await protect(req, res, 5, token)) {
     return deliver(req, res, requestOption, url, path)
   }
 
-  if (protect(req, res, 5, next)) {
-    return deliver(req, res, requestOption, url, path)
-  }
-
-  res.send('User not allowed to access this ressorce')
+  return res.send('User not allowed to access this ressorce')
 
 }
 

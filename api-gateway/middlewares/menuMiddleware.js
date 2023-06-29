@@ -9,6 +9,7 @@ const menuHandler = (req, res, requestOption, next) => {
   const user = registry.services['menu']
   const url = user.url + user.action[req.params.path]
   const path = req.params.path
+  const token = req.params.token
   console.log(url)
   console.log(requestOption)
 

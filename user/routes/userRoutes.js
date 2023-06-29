@@ -10,6 +10,6 @@ router.put('/user/:id', userController.updateUser)
 router.get('/restaurants', userController.getRestaurants) // accessed by customers only
 router.get('/restaurant/:id', userController.getRestaurantById)
 router.post('/restaurant', userController.createRestaurant)
-router.get('/restaurants/managers/:id', userController.getRestaurantsByManagerId)
+router.get('/restaurants/manager/:id', userController.getRestaurantsByManagerId)
 
 module.exports = router

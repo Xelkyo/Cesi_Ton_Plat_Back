@@ -1,32 +1,33 @@
 const jwt = require('jsonwebtoken')
 
-const deliver = (req, res, requestOption, url, path) => {
-    fetch(url, requestOption)
-        .then((response) => {
+const deliver = async (req, res, requestOption, url, path) => {
+    await fetch(url, requestOption)
+        .then( async (response) => {
             if (response.ok) {
-                return response.json()
+                return await response.json()
             } else {
                 throw new Error('Erreur lors de la requête fetch')
             }
         })
-        .then((data) => {
+        .then( async (data) => {
             console.log(data)
             if (path == 'login') {
                 const token = generateToken(data.body)
                 console.log(token)
-                res.cookie('token', token, {
-                    httpOnly: true,
-                    sameSite: 'Lax',
-                    maxAge: 3600000 //durée de vie des tokens en millisecondes : 1h
-                })
-                return res.send({ body: 'ok' })
-            } else {
-                return res.send({ body: data })
-            }
+                // res.cookie('token', token, {
+                //     domain: 'localhost:5173/logIn',
+                //     sameSite: 'Lax',
+                //     maxAge: 3600000 //durée de vie des tokens en millisecondes : 1h
+                // })
+                return await res.send({token});
+                //return res.send({ body: 'ok' })
+             } else {
+                 return await res.send({ body: data })
+             }
         })
-        .catch((error) => {
+        .catch( async (error) => {
             console.error(error)
-            return res.status(500).send('Internal Server Error')
+            return await res.status(500).send('Internal Server Error')
         })
 }
 
