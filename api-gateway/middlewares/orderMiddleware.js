@@ -39,7 +39,7 @@ const orderHandler = async (req, res, requestOption) => {
         return deliver(req, res, newRequestOption, newUrl, path)
     }
 
-    if (path == 'order'  && await protect(req, res, 1, token)) {
+    if (path == 'order' && await protect(req, res, 1, token)) {
         console.log(requestOption.body)
         const bodyObj = JSON.parse(requestOption.body)
         const restId = bodyObj.restaurantId
@@ -74,12 +74,12 @@ const orderHandler = async (req, res, requestOption) => {
         const newRequestOption = {
             method: 'GET',
             headers: { 'content-type': 'application/json' }
-          }
-      
-          const newUrl = url + req.body.restaurantId
-          console.log(newUrl)
-      
-          return deliver(req, res, newRequestOption, newUrl, path)
+        }
+        
+        const newUrl = url + JSON.parse(requestOption.body).restaurantId
+        console.log(newUrl)
+
+        return deliver(req, res, newRequestOption, newUrl, path)
     }
 
     if (status) {
