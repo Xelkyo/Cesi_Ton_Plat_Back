@@ -7,7 +7,7 @@
         "menus": "/menus",
         "menuid": "/menu/",
         "item": "/item",
-        "items": "/items",
+        "items": "/items/",
         "itemid": "/item/"
     }
 }

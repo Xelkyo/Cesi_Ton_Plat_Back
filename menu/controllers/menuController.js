@@ -7,7 +7,7 @@ const Restaurant = require('../models/Restaurant');
 const createMenu = async (req, res) => {
     try {
         const menu = await Menu.create(req.body);
-        await Restaurant.findByIdAndUpdate(req.params.id, { $push: { menus: menu._id }});
+        await Restaurant.findByIdAndUpdate(req.params.id, { $push: { menus: menu._id } });
         return res.status(200).json({ menu });
     } catch (err) {
         return res.status(400).json({ msg: err });
@@ -20,7 +20,7 @@ const updateMenu = async (req, res) => {
         if (menu) {
             try {
                 const updateMenu = await Menu.findByIdAndUpdate(req.params.id, req.body, { new: true });
-                await Restaurant.findByIdAndUpdate(req.params.id, { $push: { menus: menu._id }});
+                await Restaurant.findByIdAndUpdate(req.params.id, { $push: { menus: menu._id } });
                 return res.status(200).json({ updateMenu });
             } catch (err) {
                 return res.status(400).json({ msg: err });
@@ -53,10 +53,10 @@ const getMenuById = async (req, res) => {
 
 const getMenus = async (req, res) => {
     try {
-        const menus = await Menu.find({restaurantId: req.params.idmanag});
-        if(menus) {
+        const menus = await Menu.find({ restaurantId: req.params.idmanag });
+        if (menus) {
             return res.status(200).json({ menus });
-        } else{
+        } else {
             return res.status(200).json([]);
         }
     } catch (err) {
@@ -123,10 +123,10 @@ const updateItem = async (req, res) => {
 
 const getItems = async (req, res) => {
     try {
-        const items = await MenuItem.find({restaurantId: req.params.idmanag});
-        if(items) {
-            return res.status(200).json({ items });
-        } else{
+        const items = await MenuItem.find({ restaurantId: req.params.idmanag });
+        if (items) {
+            return res.status(200).json(items);
+        } else {
             return res.status(200).json([]);
         }
     } catch (err) {
