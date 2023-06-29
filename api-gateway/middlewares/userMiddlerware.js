@@ -31,7 +31,7 @@ const userHandler = async (req, res, requestOption, next) => {
   }
 
   if (path == 'restaurant' && await protect(req, res, 2, token)) {
-    return deliver(req, res, newRequestOption, url, path)
+    return deliver(req, res, requestOption, url, path)
   }
 
   if (path == 'restaurantmanagid' && await protect(req, res, 2, token)) {
