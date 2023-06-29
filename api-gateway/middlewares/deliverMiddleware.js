@@ -15,7 +15,7 @@ const deliver = async (req, res, requestOption, url, path) => {
                 const token = generateToken(data.body)
                 //console.log(token)
                 console.log('Send token')
-                return await res.send({ token });
+                return await res.send({ token, id: data.body })
             } else {
                 console.log('Send response without token')
                 return await res.send({ body: data })
