@@ -11,6 +11,7 @@ const userHandler = async (req, res, requestOption, next) => {
   const path = req.params.path
   console.log(url)
   let token
+  let state = true
   //console.log(requestOption)
   try {
     token = req.headers['authorization'].split(' ')[1]
@@ -20,6 +21,7 @@ const userHandler = async (req, res, requestOption, next) => {
     if (path == 'login' || path == 'register') {
       return deliver(req, res, requestOption, url, path)
     } else {
+      state = false
       return res.send('No token sent')
     }
   }
@@ -56,8 +58,11 @@ const userHandler = async (req, res, requestOption, next) => {
     //Add id user dans url
     return deliver(req, res, requestOption, url, path)
   }
-  console.log('userMiddleware.js')
-  return res.send('User not allowed to access this ressorce')
+
+  if (state) {
+    console.log('userMiddleware.js')
+    return res.send('User not allowed to access this ressorce')
+  }
 
 }
 
