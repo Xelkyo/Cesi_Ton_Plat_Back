@@ -25,8 +25,8 @@ const getOrderById = async (req, res) => {
             restaurantId: req.params.id,
             status: ('pending' || 'preparing' || 'ready')
         });
-        if (order) { res.status(200).json(order); }
-        else { res.status(200).json([]); }
+        if (order) { return res.status(200).send(order); }
+        else { return res.status(200).json([]); }
     } catch (err) {
         res.status(400).json({ msg: err });
     }
