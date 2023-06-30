@@ -1,1 +1,59 @@
-{"services":{"user":{"apiName":"user","host":"http://localhost:","port":3000,"action":{"login":"/auth/login","register":"/auth/register","restaurants":"/user/restaurants","restaurant":"/user/restaurant","restaurantid":"/user/restaurant/","restaurantmanagid":"/user/restaurants/manager/","user":"/user/user","users":"/user/users","userid":"/user/user/"},"url":"http://localhost:3000"},"menu":{"apiName":"menu","host":"http://localhost:","port":3001,"action":{"menu":"/menu","menus":"/menus","menuid":"/menu/","item":"/item","items":"/items/","itemid":"/item/"},"url":"http://localhost:3001"},"order":{"apiName":"order","host":"http://localhost:","port":3002,"action":{"order":"/order/order","orders":"/order/orders","orderid":"/order/order/","orderuser":"/order/user/"},"url":"http://localhost:3002"}}}
+{
+    "services": {
+        "user": {
+            "apiName": "user",
+            "loadBalancingStategy": "ROUND_ROBIN",
+            "index": 0,
+            "instances": [
+                {
+                    "host": "http://localhost:",
+                    "port": 3000,
+                    "url": "http://localhost:3000"
+                },
+                {
+                    "host": "http://localhost:",
+                    "port": 3003,
+                    "url": "http://localhost:3003"
+                }
+            ],
+            "action": {
+                "login": "/auth/login",
+                "register": "/auth/register",
+                "restaurants": "/user/restaurants",
+                "restaurant": "/user/restaurant",
+                "restaurantid": "/user/restaurant/",
+                "restaurantmanagid": "/user/restaurants/manager/",
+                "user": "/user/user",
+                "users": "/user/users",
+                "userid": "/user/user/"
+            },
+            "url": null
+        },
+        "menu": {
+            "apiName": "menu",
+            "host": "http://localhost:",
+            "port": 3001,
+            "action": {
+                "menu": "/menu",
+                "menus": "/menus",
+                "menuid": "/menu/",
+                "item": "/item",
+                "items": "/items/",
+                "itemid": "/item/"
+            },
+            "url": "http://localhost:3001"
+        },
+        "order": {
+            "apiName": "order",
+            "host": "http://localhost:",
+            "port": 3002,
+            "action": {
+                "order": "/order/order",
+                "orders": "/order/orders",
+                "orderid": "/order/order/",
+                "orderuser": "/order/user/"
+            },
+            "url": "http://localhost:3002"
+        }
+    }
+}

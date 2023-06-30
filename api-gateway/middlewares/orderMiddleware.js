@@ -1,4 +1,5 @@
 const registry = require('../routes/registry.json')
+const loadbalancer = require('../utils/loadbalancer')
 const User = require('../models/userModel')
 const Resto = require('../models/restaurantModel')
 
@@ -8,7 +9,9 @@ const { deliver } = require('./deliverMiddleware')
 
 const orderHandler = async (req, res, requestOption) => {
     const user = registry.services['order']
-    const url = user.url + user.action[req.params.path]
+    const index = await loadbalancer[user.loadBalancingStategy](order)
+    const instance = user.instances[index]
+    const url = instance.url + user.action[req.params.path]
     const path = req.params.path
     let token
     let status = true

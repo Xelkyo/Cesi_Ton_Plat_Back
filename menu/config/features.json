@@ -1,7 +1,19 @@
 {
     "apiName": "menu",
-    "host": "http://localhost:",
-    "port": 3001,
+    "loadBalancingStategy": "ROUND_ROBIN",
+    "index": 0,
+    "instances": [
+        {
+            "host": "http://localhost:",
+            "port": 3001,
+            "url": "http://localhost:3001"
+        },
+        {
+            "host": "http://localhost:",
+            "port": 3004,
+            "url": "http://localhost:3004"
+        }
+    ],
     "action": {
         "menu": "/menu",
         "menus": "/menus",

@@ -1,7 +1,19 @@
 {
     "apiName": "order",
-    "host": "http://localhost:",
-    "port": 3002,
+    "loadBalancingStategy": "ROUND_ROBIN",
+    "index": 0,
+    "instances": [
+        {
+            "host": "http://localhost:",
+            "port": 3002,
+            "url": "http://localhost:3002"
+        },
+        {
+            "host": "http://localhost:",
+            "port": 3005,
+            "url": "http://localhost:3005"
+        }
+    ],
     "action": {
         "order": "/order/order",
         "orders": "/order/orders",

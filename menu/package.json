@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start1": "node server1.js",
+    "start2": "node server2.js",
     "server": "node --watch server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

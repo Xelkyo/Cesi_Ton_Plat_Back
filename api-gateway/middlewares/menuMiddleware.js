@@ -1,14 +1,16 @@
 const registry = require('../routes/registry.json')
-const jwt = require('jsonwebtoken')
+const loadbalancer = require('../utils/loadbalancer')
 
 const { protect } = require('./authMiddleware')
 const { deliver } = require('./deliverMiddleware')
 const { stat } = require('fs')
 
 
-const menuHandler = (req, res, requestOption, next) => {
+const menuHandler = async (req, res, requestOption, next) => {
   const user = registry.services['menu']
-  const url = user.url + user.action[req.params.path]
+  const index = await loadbalancer[user.loadBalancingStategy](menu)
+  const instance = user.instances[index]
+  const url = instance.url + user.action[req.params.path]
   const path = req.params.path
   let token
   let status = true

@@ -12,7 +12,6 @@ const { orderHandler } = require('../middlewares/orderMiddleware')
 router.post('/book', (req, res) => {
     const registrationInfo = req.body
 
-    registrationInfo.url = registrationInfo.host + registrationInfo.port
     registry.services[registrationInfo.apiName] = { ...registrationInfo }
     fs.writeFile('./routes/registry.json', JSON.stringify(registry),
         (error) => {
