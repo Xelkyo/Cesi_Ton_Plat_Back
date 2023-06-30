@@ -50,6 +50,7 @@ const orderHandler = async (req, res, requestOption) => {
 
         console.log(resto)
         console.log(user)
+        console.log(bodyObj.order_items)
 
         const newRequestOption = {
             method: 'POST',
@@ -60,7 +61,7 @@ const orderHandler = async (req, res, requestOption) => {
                 customerId: userId,
                 customerName: user.firstName + ' ' + user.lastName,
                 customerNumber: user.phone,
-                items: bodyObj.order_items,
+                items: JSON.stringify(bodyObj.order_items),
                 deliveryAddress: user.address,
                 pickupAddress: resto.address,
                 totalPrice: bodyObj.price

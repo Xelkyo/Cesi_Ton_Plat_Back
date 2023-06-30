@@ -37,7 +37,7 @@ const orderSchema = new mongoose.Schema({
         required: false
     },
     items: {
-        type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Item' }],
+        type: [{ type: mongoose.Schema.Types.String, ref: 'Item' }],
         required: [true, 'Items are required']
     },
     deliveryAddress: {
