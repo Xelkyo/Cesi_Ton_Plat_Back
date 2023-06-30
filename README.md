@@ -12,14 +12,20 @@ git clone https://github.com/CESI-EAT/cesieat-client.git
 ```
 
 - Installe les dépendances !
+Rejoindre chaque dossier (api-gateway, user, menu et order) et taper la commande suivante 
 ```
-cd cesieat-client
 npm install
 ```
 
 ### Commencer à développer
+Pour l'api gateway:
 ```
-npm run serve
+npm run start
+```
+Pour les autres dossiers : 
+```
+npm run start1
+nmp run start2
 ```
 
 ### Compiler une version de production
@@ -55,7 +61,7 @@ git add .
 ```
 npm run commit 
 ```
-☣ Important ☣
+## Important 
 Plusieurs questions vont t'être posées :
 1. ``Select the type of change that you're committing``:
 L’assistant te demande de préciser le type de ton commit : as-tu développé une nouvelle fonctionnalité, réparé un bug… ? Sers-toi des flèches de votre clavier pour choisir le type, et appuie sur la touche Entrée pour valider.
